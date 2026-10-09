@@ -30,4 +30,15 @@ test.describe('Uchi.ru widget', () => {
     await expect(widgetPage.getTitle()).toHaveText('Связь с поддержкой');
   });
 
+  test('search shows found articles', async () => {
+    await widgetPage.openWidget();
+
+    await widgetPage.search('пароль');
+
+    const results = widgetPage.getSearchResults();
+    await expect(results.first()).toBeVisible();
+
+    const count = await results.count();
+    await expect(widgetPage.getSearchResultsTitle()).toHaveText(new RegExp(`^Нашл\\S* ${count} стат`));
+  });
 });

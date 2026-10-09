@@ -9,6 +9,10 @@ enum WidgetPageSelectors {
     ARTICLE_POPULAR_TITLE = '[class^=popularTitle__]',
     ARTICLE_POPULAR_LIST = `${ARTICLE_POPULAR_TITLE} + ul[class^=articles__]`,
     ARTICLE_POPULAR_LIST_ITEM = `${ARTICLE_POPULAR_LIST} > li`,
+    SEARCH_INPUT = '[class^=search__] input',
+    SEARCH_RESULTS = '[class^=found__]',
+    SEARCH_RESULTS_TITLE = `${SEARCH_RESULTS} > [class^=title__]`,
+    SEARCH_RESULTS_ITEM = `${SEARCH_RESULTS} [data-testid=article-list-item]`,
 }
 
 export class WidgetPage {
@@ -38,5 +42,17 @@ export class WidgetPage {
 
     getWidgetBody() {
         return this.wrapper().locator(WidgetPage.selector.WIDGET_BODY);
+    }
+
+    async search(query: string) {
+        return this.wrapper().locator(WidgetPage.selector.SEARCH_INPUT).fill(query);
+    }
+
+    getSearchResultsTitle(): Locator {
+        return this.wrapper().locator(WidgetPage.selector.SEARCH_RESULTS_TITLE);
+    }
+
+    getSearchResults(): Locator {
+        return this.wrapper().locator(WidgetPage.selector.SEARCH_RESULTS_ITEM);
     }
 }
